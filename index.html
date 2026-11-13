@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Domos · Suivi des ressources domestiques</title>
+  <meta name="description" content="Fuel et eau d'une maison : un carnet de relevés croisé avec la météo réelle. Moyennes, saisonnalité, régression sur les degrés-jours, projection de la cuve." />
+  <meta name="theme-color" content="#070b10" />
+  <link rel="canonical" href="https://thot-lab.github.io/domos/" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <!-- Aperçu des liens partagés (WhatsApp, iMessage, réseaux) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Domos" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:title" content="Domos · Suivi des ressources domestiques" />
+  <meta property="og:description" content="Fuel et eau d'une maison, croisés avec la météo réelle : moyennes, saisons, régression, projection de la cuve." />
+  <meta property="og:url" content="https://thot-lab.github.io/domos/" />
+  <meta property="og:image" content="https://thot-lab.github.io/domos/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Domos, suivi des ressources domestiques" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Domos · Suivi des ressources domestiques" />
+  <meta name="twitter:description" content="Fuel et eau d'une maison, croisés avec la météo réelle." />
+  <meta name="twitter:image" content="https://thot-lab.github.io/domos/og-image.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <script>
+    // Thème appliqué avant le premier rendu (choix gardé dans le navigateur, sombre par défaut).
+    try { document.documentElement.dataset.theme = localStorage.getItem("domos.theme") || "dark"; } catch { document.documentElement.dataset.theme = "dark"; }
+    // Dans le lecteur de Central (iframe), le coin haut droit porte le bouton « Revenir à Central » : on lui laisse la place.
+    if (window.top !== window.self) document.documentElement.dataset.embedded = "1";
+    // La pastille « retour à Central » n'existe que dans Central ; sur GitHub Pages, on ne la charge pas.
+    if (location.pathname.startsWith("/software-lab/")) { const s = document.createElement("script"); s.src = "/retour-central.js"; s.defer = true; s.dataset.gameId = "domos"; document.head.append(s); }
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+</html>

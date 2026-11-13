@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Charte d'EasyLoc (nuit bleutée, cartes en verre, typographies rondes), avec un accent par ressource :
+   ambre pour le fuel, bleu d'eau pour l'eau. Les couleurs sont en canaux RGB pour Tailwind. */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: 7 11 16;
+  --bg2: 11 17 24;
+  --card: 15 23 34;
+  --soft: 19 32 46;
+  --line: 39 64 90;
+  --ink: 226 232 240;
+  --ink2: 148 163 184;
+  --mut: 100 116 139;
+  --fuel: 251 191 36;
+  --fuel2: 249 115 22;
+  --eau: 56 189 248;
+  --eau2: 45 212 191;
+  --acc: 34 211 238;
+  --acc2: 74 222 128;
+  --pos: 74 222 128;
+  --neg: 251 113 133;
+  --warn: 251 191 36;
+  --onacc: 7 11 16;
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 24px 60px -32px rgba(0, 0, 0, 0.8);
+  --glass: rgba(11, 17, 24, 0.72);
+  --tip: rgba(9, 14, 21, 0.92);
+  --grid: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: 240 246 250;
+  --bg2: 247 251 253;
+  --card: 255 255 255;
+  --soft: 244 249 252;
+  --line: 214 228 238;
+  --ink: 36 52 68;
+  --ink2: 83 103 120;
+  --mut: 124 145 160;
+  --fuel: 217 119 6;
+  --fuel2: 234 88 12;
+  --eau: 2 132 199;
+  --eau2: 13 148 136;
+  --acc: 2 132 199;
+  --acc2: 13 148 136;
+  --pos: 22 163 74;
+  --neg: 220 38 38;
+  --warn: 202 138 4;
+  --onacc: 255 255 255;
+  --shadow-card: 0 1px 2px rgba(56, 65, 75, 0.04), 0 14px 32px -22px rgba(56, 65, 75, 0.28);
+  --glass: rgba(255, 255, 255, 0.8);
+  --tip: rgba(255, 255, 255, 0.96);
+  --grid: rgba(36, 52, 68, 0.08);
+}
+
+[data-res="fuel"] { --acc: var(--fuel); --acc2: var(--fuel2); }
+[data-res="eau"] { --acc: var(--eau); --acc2: var(--eau2); }
+
+html, body, #root { min-height: 100%; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+
+body {
+  @apply bg-bg text-ink font-sans antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Halo d'ambiance : deux nappes de couleur très diffuses derrière la page, teintées par la ressource affichée. */
+.aura { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.aura i { position: absolute; border-radius: 50%; filter: blur(110px); opacity: 0.16; transition: background 0.8s ease; }
+.aura i:nth-child(1) { width: 62vw; height: 46vw; right: -16vw; top: -24vw; background: rgb(var(--acc)); animation: drift 26s ease-in-out infinite alternate; }
+.aura i:nth-child(2) { width: 46vw; height: 38vw; left: -18vw; top: 8vw; background: rgb(var(--acc2)); opacity: 0.1; animation: drift 34s ease-in-out infinite alternate-reverse; }
+[data-theme="light"] .aura i { opacity: 0.2; }
+@keyframes drift { to { transform: translate3d(4vw, 3vw, 0) scale(1.08); } }
+
+::selection { background: rgb(var(--acc) / 0.3); }
+:focus-visible { outline: 2px solid rgb(var(--acc)); outline-offset: 2px; border-radius: 8px; }
+
+.num { font-family: "JetBrains Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.card { @apply min-w-0 rounded-2xl border border-line/60 bg-card/80 shadow-card backdrop-blur-xl; }
+.glass { background: var(--glass); backdrop-filter: blur(18px) saturate(1.3); -webkit-backdrop-filter: blur(18px) saturate(1.3); }
+[data-embedded] .clear-corner { padding-right: 76px; }
+.kicker { @apply text-[10.5px] font-bold uppercase tracking-[0.22em] text-acc; }
+.label { @apply text-[10.5px] font-bold uppercase tracking-[0.16em] text-mut; }
+.field { @apply w-full rounded-xl border border-line/80 bg-soft/60 px-3 py-2 text-sm text-ink outline-none transition placeholder:text-mut/70 focus:border-acc/70 focus:bg-card focus:ring-4 focus:ring-acc/10; }
+.btn { @apply inline-flex items-center justify-center gap-2 rounded-full border border-line/80 bg-soft/70 px-3.5 py-1.5 text-[13px] font-semibold text-ink2 transition hover:border-acc/50 hover:text-ink disabled:cursor-not-allowed disabled:opacity-40; }
+.btn-primary { @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-[13px] font-bold text-onacc transition disabled:cursor-not-allowed disabled:opacity-40; background: linear-gradient(135deg, rgb(var(--acc)), rgb(var(--acc2))); }
+.btn-primary:hover:not(:disabled) { filter: brightness(1.08); box-shadow: 0 0 28px -6px rgb(var(--acc) / 0.55); }
+.grad-text { background: linear-gradient(120deg, rgb(var(--acc)), rgb(var(--acc2))); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.grad-duo { background: linear-gradient(100deg, rgb(var(--fuel)), rgb(var(--fuel2)) 38%, rgb(var(--eau)) 68%, rgb(var(--eau2))); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* Infobulle des graphiques. */
+.tip { position: absolute; z-index: 30; pointer-events: none; min-width: 150px; padding: 10px 12px; border-radius: 12px; border: 1px solid rgb(var(--line) / 0.8);
+  background: var(--tip); backdrop-filter: blur(12px); box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.6); font-size: 12px; line-height: 1.5; white-space: nowrap; }
+.tip b { font-weight: 700; color: rgb(var(--ink)); }
+.tip .row { display: flex; justify-content: space-between; gap: 16px; color: rgb(var(--ink2)); }
+.tip .row span:last-child { font-family: "JetBrains Mono", monospace; color: rgb(var(--ink)); }
+
+svg text { font-family: "Nunito", system-ui, sans-serif; }
+svg .axis { fill: rgb(var(--mut)); font-size: 11px; font-weight: 600; }
+svg .gridline { stroke: var(--grid); }
+
+/* Liquide des jauges : deux vagues qui glissent à des vitesses différentes. */
+@keyframes wave { to { transform: translateX(-50%); } }
+.wave-a { animation: wave 7s linear infinite; }
+.wave-b { animation: wave 11s linear infinite reverse; }
+@keyframes bubble { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: 0.7; } 100% { transform: translateY(-90px); opacity: 0; } }
+@keyframes pulse-ring { from { transform: scale(0.7); opacity: 0.9; } to { transform: scale(2.6); opacity: 0; } }
+
+input[type="range"].slider { -webkit-appearance: none; appearance: none; height: 4px; border-radius: 4px; background: rgb(var(--line)); outline: none; }
+input[type="range"].slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, rgb(var(--acc)), rgb(var(--acc2))); border: 3px solid rgb(var(--card)); box-shadow: 0 0 0 1px rgb(var(--acc) / 0.5), 0 4px 14px -2px rgb(var(--acc) / 0.6); cursor: grab; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: rgb(var(--line)); border-radius: 8px; border: 2px solid transparent; background-clip: content-box; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wave-a, .wave-b, .aura i { animation: none; }
+  html { scroll-behavior: auto; }
+}
